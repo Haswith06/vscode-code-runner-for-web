@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday with Fireworks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000033;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .letter {
+            font-size: 4rem;
+            font-weight: bold;
+            animation: rainbow 3s infinite linear;
+        }
+
+        /* Fireworks */
+        .firework {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, transparent, rgba(255, 255, 255, 0.8), transparent),
+                url('haswi4.jpg') center/cover no-repeat;
+            border-radius: 50%;
+            animation: firework-explode 1.5s ease-in-out infinite, firework-color 3s linear infinite;
+            mix-blend-mode: screen;
+        }
+
+        .firework1 { top: 15%; left: 25%; animation-delay: 0s; }
+        .firework2 { top: 10%; right: 20%; animation-delay: 0.5s; }
+        .firework3 { bottom: 20%; left: 30%; animation-delay: 1s; }
+        .firework4 { bottom: 15%; right: 25%; animation-delay: 1.5s; }
+
+        @keyframes firework-explode {
+            0% { transform: scale(0.5); opacity: 1; }
+            50% { transform: scale(3); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes firework-color {
+            0% { box-shadow: 0 0 30px #FF007F; }
+            25% { box-shadow: 0 0 30px #FF9B00; }
+            50% { box-shadow: 0 0 30px #FFEC00; }
+            75% { box-shadow: 0 0 30px #00FF00; }
+            100% { box-shadow: 0 0 30px #00E6FF; }
+        }
+
+        /* Balloons */
+        .balloon {
+            position: absolute;
+            width: 100px;
+            height: 130px;
+            background: radial-gradient(circle, white, #FF007F);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .balloon-left { left: 10%; bottom: 0; }
+        .balloon-right { right: 10%; bottom: 0; }
+        .balloon-middle { left: 45%; bottom: 0; }
+
+        .balloon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-200px); }
+            100% { transform: translateY(-600px); }
+        }
+
+        /* Countdown */
+        #countdown {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        @keyframes rainbow {
+            0% { color: #FF007F; }
+            14% { color: #FF9B00; }
+            28% { color: #FFEC00; }
+            42% { color: #00FF00; }
+            57% { color: #00E6FF; }
+            71% { color: #8000FF; }
+            85% { color: #FF007F; }
+            100% { color: #FF007F; }
+        }
+    </style>
+    <script>
+        function updateCountdown() {
+            let now = new Date();
+            let midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            
+            let timeDiff = midnight - now;
+            let hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+            let minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+            let seconds = Math.floor((timeDiff / 1000) % 60);
+            
+            document.getElementById("countdown").innerText = `Time until birthday: ${hours}h ${minutes}m ${seconds}s`;
+            
+            if (timeDiff <= 0) {
+                document.getElementById("birthday-music").play();
+                setTimeout(() => window.location.href = "birthday.html", 5000);
+            } else {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        window.onload = updateCountdown;
+    </script>
+</head>
+<body>
+    <div class="title">
+        <span class="letter">H</span>
+        <span class="letter">a</span>
+        <span class="letter">p</span>
+        <span class="letter">p</span>
+        <span class="letter">y</span>
+        <span class="letter"> </span>
+        <span class="letter">B</span>
+        <span class="letter">i</span>
+        <span class="letter">r</span>
+        <span class="letter">t</span>
+        <span class="letter">h</span>
+        <span class="letter">d</span>
+        <span class="letter">a</span>
+        <span class="letter">y</span>
+    </div>
+    <div id="countdown"></div>
+    <audio id="birthday-music" src="birthday-song.mp3"></audio>
+    <div class="firework firework1"></div>
+    <div class="firework firework2"></div>
+    <div class="firework firework3"></div>
+    <div class="firework firework4"></div>
+    <div class="balloon balloon-left"><img src="haswi4.jpg" alt="Balloon Left"></div>
+    <div class="balloon balloon-right"><img src="haswi4.jpg" alt="Balloon Right"></div>
+    <div class="balloon balloon-middle"><img src="haswi4.jpg" alt="Balloon Middle"></div>
+</body>
+</html>
